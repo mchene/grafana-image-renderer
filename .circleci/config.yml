@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 aliases:
   - &filter-not-release-or-master
@@ -14,6 +14,18 @@ defaults: &defaults
   working_directory: ~/grafana-image-renderer
   docker:
     - image: circleci/node:12.13.1-stretch
+
+commands:
+  install-grabpl:
+    description: "Install Grafana build pipeline tool"
+    steps:
+      - run:
+          name: "Install Grafana build pipeline tool"
+          command: |
+            VERSION=0.4.11
+            curl -fLO https://grafana-downloads.storage.googleapis.com/grafana-build-pipeline/v${VERSION}/grabpl
+            chmod +x grabpl
+            mv grabpl /tmp
 
 jobs:
   build:
@@ -54,6 +66,10 @@ jobs:
       - run:
           name: Package
           command: './scripts/package_target.sh linux-x64-glibc'
+      - install-grabpl
+      - run:
+          name: Create and sign plugin manifest
+          command: /tmp/grabpl build-plugin-manifest ./dist/plugin-linux-x64-glibc
       - run:
           name: Archive
           command: './scripts/archive_target.sh linux-x64-glibc'
@@ -80,6 +96,10 @@ jobs:
       - run:
           name: Package
           command: './scripts/package_target.sh darwin-x64-unknown'
+      - install-grabpl
+      - run:
+          name: Create and sign plugin manifest
+          command: /tmp/grabpl build-plugin-manifest ./dist/plugin-darwin-x64-unknown
       - run:
           name: Archive
           command: './scripts/archive_target.sh darwin-x64-unknown'
@@ -106,6 +126,10 @@ jobs:
       - run:
           name: Package
           command: './scripts/package_target.sh win32-x64-unknown'
+      - install-grabpl
+      - run:
+          name: Create and sign plugin manifest
+          command: /tmp/grabpl build-plugin-manifest ./dist/plugin-win32-x64-unknown
       - run:
           name: Archive
           command: './scripts/archive_target.sh win32-x64-unknown'
@@ -132,6 +156,10 @@ jobs:
       - run:
           name: Package
           command: './scripts/package_target.sh linux-x64-glibc true plugin-linux-x64-glibc-no-chromium'
+      - install-grabpl
+      - run:
+          name: Create and sign plugin manifest
+          command: /tmp/grabpl build-plugin-manifest ./dist/plugin-linux-x64-glibc-no-chromium
       - run:
           name: Archive
           command: './scripts/archive_target.sh linux-x64-glibc plugin-linux-x64-glibc-no-chromium'
