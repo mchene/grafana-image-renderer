@@ -58,8 +58,10 @@ jobs:
         type: string
       skip_chromium:
         type: boolean
+        default: false
       override_output:
         type: string
+        default: ''
     <<: *defaults
     steps:
       - checkout
@@ -190,7 +192,6 @@ workflows:
           matrix:
             parameters:
               arch: [linux-x64-glibc, darwin-x64-unknown, win32-x64-unknown]
-              skip_chromium: [false]
       - package-plugin-linux-x64-glibc-no-chromium:
           filters: *filter-not-release-or-master
           requires:
