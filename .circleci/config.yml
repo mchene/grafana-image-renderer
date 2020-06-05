@@ -249,3 +249,7 @@ workflows:
     jobs:
       - build:
           filters: *filter-not-release-or-master
+      - package_linux_x64:
+          requires:
+            - build
+          filters: *filter-not-release-or-master
