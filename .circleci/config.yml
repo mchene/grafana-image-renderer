@@ -192,10 +192,11 @@ workflows:
           matrix:
             parameters:
               arch: [linux-x64-glibc, darwin-x64-unknown, win32-x64-unknown]
-      - package-plugin-linux-x64-glibc-no-chromium:
+      - package:
           filters: *filter-not-release-or-master
           requires:
             - build
+          name: package-plugin-linux-x64-glibc-no-chromium
           arch: linux-x64-glibc
           skip_chromium: true
           override_output: plugin-linux-x64-glibc-no-chromium
