@@ -166,7 +166,7 @@ workflows:
           type: approval
           requires:
             - build
-            - package-linux_x64-glibc
+            - package-linux-x64-glibc
             - package-darwin-x64-unknown
             - package-win32-x64-unknown
             - package-linux-x64-glibc-no-chromium
@@ -196,7 +196,7 @@ workflows:
           filters: *filter-not-release-or-master
           requires:
             - build
-          name: package-plugin-linux-x64-glibc-no-chromium
+          name: package-linux-x64-glibc-no-chromium
           arch: linux-x64-glibc
           skip_chromium: true
           override_output: plugin-linux-x64-glibc-no-chromium
