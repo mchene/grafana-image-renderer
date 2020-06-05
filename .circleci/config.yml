@@ -76,7 +76,7 @@ jobs:
       - run:
           name: Package
           command: |
-            if [ << parameters.skip_chromium >> ]; then
+            if [ << parameters.skip_chromium >> = true ]; then
               ./scripts/package_target.sh << parameters.arch >> true << parameters.override_output >>
             else
               ./scripts/package_target.sh << parameters.arch >>
@@ -85,7 +85,7 @@ jobs:
       - run:
           name: Create and sign plugin manifest
           command: |
-            if [ << parameters.skip_chromium >> ]; then
+            if [ << parameters.skip_chromium >> = true ]; then
               /tmp/grabpl build-plugin-manifest ./dist/<< parameters.override_output >>
             else
               /tmp/grabpl build-plugin-manifest ./dist/plugin-<< parameters.arch >>
@@ -93,7 +93,7 @@ jobs:
       - run:
           name: Archive
           command: |
-            if [ << parameters.skip_chromium >> ]; then
+            if [ << parameters.skip_chromium >> = true ]; then
               ./scripts/archive_target.sh << parameters.override_output >>
             else
               ./scripts/archive_target.sh plugin-<< parameters.arch >>
