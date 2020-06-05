@@ -94,9 +94,9 @@ jobs:
           name: Archive
           command: |
             if [ << parameters.skip_chromium >> = true ]; then
-              ./scripts/archive_target.sh << parameters.override_output >>
+              ./scripts/archive_target.sh << parameters.arch >> << parameters.override_output >>
             else
-              ./scripts/archive_target.sh plugin-<< parameters.arch >>
+              ./scripts/archive_target.sh << parameters.arch >>
             fi
       - persist_to_workspace:
           root: .
