@@ -158,7 +158,7 @@ workflows:
           filters: *filter-only-master
           requires:
             - build
-          name: package-plugin-linux-x64-glibc-no-chromium
+          name: package-linux-x64-glibc-no-chromium
           arch: linux-x64-glibc
           skip_chromium: true
           override_output: plugin-linux-x64-glibc-no-chromium
